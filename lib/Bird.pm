@@ -37,34 +37,27 @@ sub name{
   return $self->{"name"};
 }
 
-sub friend_timeline{
+sub friends_timeline{
   my $self = shift;
   my @tweets = @{$self->{"tweets"}};
   foreach ($self->following){
     push(@tweets, @{$_->{"tweets"}});
   }
   $self->_quick_sort(\@tweets, 0, $#tweets);
-  my @timeline;
-  foreach (@tweets){
-    push(@timeline, $_->text);
-  }
-  return reverse @timeline;
+  @tweets = reverse @tweets;  
+  return \@tweets;
 }
 
 sub tweet{
-  my ($self, $text) = @_;
-  my $tweet = Bird::Tweet->new($self, $text);
+  my ($self, $message) = @_;
+  my $tweet = Bird::Tweet->new($self, $message);
   unshift(@{$self->{"tweets"}}, $tweet);
 }
 
 sub timeline{
   my $self = shift;
-  my @timeline = @{$self->{"tweets"}};
-  my @tweets;
-  foreach (@timeline){
-    push(@tweets, $_->text);
-  }
-  return @tweets;
+  my $timeline = $self->{"tweets"};
+  return $timeline;
 }
 
 sub unfollow{

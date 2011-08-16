@@ -27,7 +27,7 @@ sub id{
   return $self->{"id"};
 }
 
-sub text{
+sub message{
   $self = shift;
   return $self->{"text"};
 }
